@@ -20,7 +20,7 @@ def updateDomainDB(db, fname):
 
 
 def updateJson(db, usercoll, fname):
-    filecoll = db['testFile']
+    filecoll = db['filesUploaded']
     foundFile = filecoll.find_one({'filename':fname})
 
     # if (foundFile):
@@ -68,5 +68,6 @@ if __name__ == "__main__":
         db = client.iimt4601
         # updateDomainDB(db, 'output.json')
         for index, fname in enumerate(jsonFiles):
-            usercoll = db['testUsers_1']
+            print('processing: ' + fname)
+            usercoll = db['Users']
             updateJson(db, usercoll, fname)
