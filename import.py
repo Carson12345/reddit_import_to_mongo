@@ -5,6 +5,7 @@ import json
 import time 
 import sys
 import os
+from bson.json_util import dumps
 root_dir = "./json_files"
 path = "json_files/"
 domainPath = "./domain/"
@@ -65,7 +66,7 @@ if __name__ == "__main__":
     print( jsonFiles )
     with MongoClient("mongodb://admin:iimt4601@ds019481.mlab.com:19481/iimt4601") as client:
         db = client.iimt4601
-        updateDomainDB(db, 'output.json')
+        # updateDomainDB(db, 'output.json')
         for index, fname in enumerate(jsonFiles):
             usercoll = db['testUsers_1']
-            # updateJson(db, usercoll, fname)
+            updateJson(db, usercoll, fname)
