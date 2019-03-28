@@ -29,39 +29,38 @@ def updateJson(db, usercoll, fname):
     filecoll.insert_one({'filename':fname})
     with open(path + fname,'r') as f:
         for idx, line in enumerate(f):
-            if (idx < 10):
-                try:
-                    row = json.loads(line)
-                    found = usercoll.find_one({'author':row['author']})
-                    if (found):
-                        real_count = row['count'] - row['not_identified']
-                        old_count = found['count']
-                        old_real_count = found['count'] - found['not_identified']
-                        new_score = (real_count*row['score'] + old_real_count*found['score']) / (old_real_count + real_count)
-                        new_count = old_count + row['count']
+            try:
+                row = json.loads(line)
+                found = usercoll.find_one({'author':row['author']})
+                if (found):
+                    real_count = row['count'] - row['not_identified']
+                    old_count = found['count']
+                    old_real_count = found['count'] - found['not_identified']
+                    new_score = (real_count*row['score'] + old_real_count*found['score']) / (old_real_count + real_count)
+                    new_count = old_count + row['count']
 
-                        updateObj = {}
-                        set_obj = {
-                            'count': new_count,
-                            'high': row['high'] + found['high'],
-                            'very_high': row['very_high'] + found['very_high'],
-                            'low': row['low'] + found['low'],
-                            'very_low': row['very_low'] + found['very_low'],
-                            'mixed': row['mixed'] + found['mixed'],
-                            'not_identified': row['not_identified'] + found['not_identified'],
-                            'score': new_score
-                        }
-                        updateObj['$set'] = set_obj
-                        usercoll.find_one_and_update({'_id':found['_id']},updateObj)
-                        print("Found")
-                        print(found)
-                    else:
-                        authorObj = row
-                        usercoll.insert_one(authorObj)
-                        print("Insert successful!")
-                        print(row['author'])
-                except:
-                    print("Something went wrong: " + line)
+                    updateObj = {}
+                    set_obj = {
+                        'count': new_count,
+                        'high': row['high'] + found['high'],
+                        'very_high': row['very_high'] + found['very_high'],
+                        'low': row['low'] + found['low'],
+                        'very_low': row['very_low'] + found['very_low'],
+                        'mixed': row['mixed'] + found['mixed'],
+                        'not_identified': row['not_identified'] + found['not_identified'],
+                        'score': new_score
+                    }
+                    updateObj['$set'] = set_obj
+                    usercoll.find_one_and_update({'_id':found['_id']},updateObj)
+                    print("Found")
+                    print(found)
+                else:
+                    authorObj = row
+                    usercoll.insert_one(authorObj)
+                    print("Insert successful!")
+                    print(row['author'])
+            except:
+                print("Something went wrong: " + line)
 
 
 if __name__ == "__main__":
