@@ -12,7 +12,7 @@ domainPath = "./domain/"
 
 def updateUserCollection(db):
     usercoll = db['Users']
-    allUser = usercoll.find().limit(5)
+    allUser = usercoll.find()
     for item in allUser:
         print(item)
         updateObj = {}
@@ -86,7 +86,7 @@ if __name__ == "__main__":
         db = client.iimt4601
         updateUserCollection(db)
         # updateDomainDB(db, 'output.json')
-        for index, fname in enumerate(jsonFiles):
-            print('processing: ' + fname)
+        # for index, fname in enumerate(jsonFiles):
+        #     print('processing: ' + fname)
             # usercoll = db['Users']
             # updateJson(db, usercoll, fname)
