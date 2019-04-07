@@ -16,8 +16,8 @@ def updateUserCollection(db):
     for item in allUser:
         print(item)
         updateObj = {}
-        total = item['low'] + item['vert_low'] + item['mixed'] + item['high'] + item['vert_high']
-        score = item['low']*0.5 + item['vert_low']*1 + item['mixed']*0.25
+        total = item['low'] + item['very_low'] + item['mixed'] + item['high'] + item['very_high']
+        score = item['low']*0.5 + item['very_low']*1 + item['mixed']*0.25
         set_obj = {
             'score': score/total
         }
