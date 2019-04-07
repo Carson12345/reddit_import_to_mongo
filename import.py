@@ -84,7 +84,7 @@ def updateJson(db, usercoll, fname):
 
 if __name__ == "__main__":
     jsonFiles = os.listdir(root_dir) 
-    print( jsonFiles )
+    # print( jsonFiles )
     with MongoClient("mongodb://admin:iimt4601@ds019481.mlab.com:19481/iimt4601") as client:
         db = client.iimt4601
         updateUserCollection(db)
