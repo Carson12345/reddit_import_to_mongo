@@ -18,8 +18,9 @@ def updateUserCollection(db):
         updateObj = {}
         total = item['low'] + item['very_low'] + item['mixed'] + item['high'] + item['very_high']
         score = item['low']*0.5 + item['very_low']*1 + item['mixed']*0.25
+        
         set_obj = {
-            'score': score/total
+            'score': score/total if total > 0 else 0
         }
         updateObj['$set'] = set_obj
         usercoll.find_one_and_update({'_id': item['_id'] },updateObj)
