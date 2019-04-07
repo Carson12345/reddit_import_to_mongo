@@ -15,7 +15,7 @@ def updateUserCollection(db):
     allUser = usercoll.find()
     for idx, item in enumerate(allUser):
         try:
-            print(idx + " / " + len(allUser))
+            print(idx + " / " + len(list(allUser)))
             updateObj = {}
             total = item['low'] + item['very_low'] + item['mixed'] + item['high'] + item['very_high']
             score = item['low']*0.5 + item['very_low']*1 + item['mixed']*0.25
