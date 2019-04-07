@@ -13,9 +13,9 @@ domainPath = "./domain/"
 def updateUserCollection(db):
     usercoll = db['Users']
     allUser = usercoll.find()
-    for item in allUser:
+    for idx, item in enumerate(allUser):
         try:
-            print(item)
+            print(idx + " / " + len(allUser))
             updateObj = {}
             total = item['low'] + item['very_low'] + item['mixed'] + item['high'] + item['very_high']
             score = item['low']*0.5 + item['very_low']*1 + item['mixed']*0.25
