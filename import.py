@@ -26,7 +26,7 @@ def updateUserCollection(db):
             updateObj['$set'] = set_obj
             usercoll.find_one_and_update({'_id': item['_id'] },updateObj)
         except:
-                print("Something went wrong: " + item['_id'])
+            print("Something went wrong: ")
 
 
 def updateDomainDB(db, fname):
