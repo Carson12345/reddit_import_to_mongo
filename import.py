@@ -10,6 +10,21 @@ root_dir = "./json_files"
 path = "json_files/"
 domainPath = "./domain/"
 
+def updateUserCollection(db):
+    usercoll = db['Users']
+    allUser = usercoll.find().limit(5)
+    for item in allUser:
+        print(item)
+        updateObj = {}
+        total = item['low'] + item['vert_low'] + item['mixed'] + item['high'] + item['vert_high']
+        score = item['low']*0.5 + item['vert_low']*1 + item['mixed']*0.25
+        set_obj = {
+            'score': score/total
+        }
+        updateObj['$set'] = set_obj
+        usercoll.find_one_and_update({'_id': item['_id'] },updateObj)
+
+
 def updateDomainDB(db, fname):
     domainColl = db['domainTest']
     domainColl.drop()
@@ -68,8 +83,9 @@ if __name__ == "__main__":
     print( jsonFiles )
     with MongoClient("mongodb://admin:iimt4601@ds019481.mlab.com:19481/iimt4601") as client:
         db = client.iimt4601
+        updateUserCollection(db)
         # updateDomainDB(db, 'output.json')
         for index, fname in enumerate(jsonFiles):
             print('processing: ' + fname)
-            usercoll = db['Users']
-            updateJson(db, usercoll, fname)
+            # usercoll = db['Users']
+            # updateJson(db, usercoll, fname)
